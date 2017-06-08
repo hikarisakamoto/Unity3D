@@ -1,6 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Brick.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Ball.cs" Line="38" Column="15" />
+      <File FileName="Assets/Scripts/Brick.cs" Line="33" Column="63" />
+      <File FileName="Assets/Scripts/Paddle.cs" Line="37" Column="10" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

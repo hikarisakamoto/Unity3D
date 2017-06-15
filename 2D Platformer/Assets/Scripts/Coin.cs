@@ -4,23 +4,21 @@ using System.Collections;
 
 public class Coin : MonoBehaviour
 {
-	public static int coinCount = 0;
+    public static int coinCount = 0;
 
-	public Text coinsToGo;
+    void Start()
+    {
+        coinCount++;
 
-	void Start ()
-	{
-		coinCount++;
-
-	}
-	void OnTriggerEnter2D (Collider2D other)
-	{
-		if (other.gameObject.CompareTag ("Player")) {
-			coinCount--;
-
-			Destroy (gameObject);
-		}
-	}
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+            coinCount--;
+        }
+    }
 
 
 }

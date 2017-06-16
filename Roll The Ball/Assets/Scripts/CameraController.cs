@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
 
     public GameObject player;
 
@@ -14,8 +13,7 @@ public class CameraController : MonoBehaviour
         offset = transform.position - player.transform.position;
     }
 
-    private void LateUpdate()// Best for follow cameras, procidural animations and get last known states -> It will run after all itens have been 
-                             // processed in Update
+    private void LateUpdate() //LateUpdate runs after all itens have been processed by update
     {
         transform.position = player.transform.position + offset;
     }

@@ -2,24 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine;
+using System.Collections;
+
 public class DestroyByContact : MonoBehaviour
 {
     public GameObject explosion;
     public GameObject playerExplosion;
+    public int scoreValue;
+    private GameController gameController;
 
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-        // Debug.Log(other.name);
-        if (other.tag == "Boundary")
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        if (gameControllerObject != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
+        if (gameController == null)
+        {
+            Debug.Log("Cannot find 'GameController' script");
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        //if (other.tag == "Boundary" || other.tag == "Enemy")
+        if (other.CompareTag("Boundary") || other.CompareTag("Enemy"))
         {
             return;
         }
+
         Instantiate(explosion, transform.position, transform.rotation);
-        if (other.tag == "Player")
+
+        //if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+            if (explosion != null)
+            {
+                Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+            }
+
+            gameController.GameOver();
         }
 
+        gameController.AddScore(scoreValue);
         Destroy(other.gameObject);
         Destroy(gameObject);
     }

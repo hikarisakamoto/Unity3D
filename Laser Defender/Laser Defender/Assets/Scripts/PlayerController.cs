@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
 	public GameObject projectile;
 	public float projectileSpeed = 1f;
 	public float firingRate = 1f;
+	public float health = 250f;
+	public AudioClip fireSound;
+	public AudioClip deathSound;
 
 	private float xMax, xMin;
 
@@ -45,14 +48,29 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			CancelInvoke ("Fire");
 		}
-
-
 	}
 
 	void Fire ()
 	{
 		GameObject laserBeam = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
 		laserBeam.rigidbody2D.velocity = new Vector3 (0f, projectileSpeed, 0f);
-	
+		AudioSource.PlayClipAtPoint (fireSound, transform.position);
+		
+	}
+
+	void OnTriggerEnter2D (Collider2D collider)
+	{
+		//		Debug.Log (collider);
+		Projectile missile = collider.gameObject.GetComponent<Projectile> ();
+		if (missile) {
+			missile.Hit ();
+			health -= missile.GetDamage ();
+			if (health <= 0) {
+				Destroy (gameObject);
+				AudioSource.PlayClipAtPoint (deathSound, transform.position);
+			}
+			//			Debug.Log ("Hit by missile");
+		}
 	}
 }
+

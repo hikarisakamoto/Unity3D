@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 	void Fire ()
 	{
 		GameObject laserBeam = Instantiate (projectile, transform.position, Quaternion.identity) as GameObject;
-		laserBeam.rigidbody2D.velocity = new Vector3 (0f, projectileSpeed, 0f);
+		laserBeam.GetComponent<Rigidbody2D>().velocity = new Vector3 (0f, projectileSpeed, 0f);
 		AudioSource.PlayClipAtPoint (fireSound, transform.position);
 		
 	}
@@ -66,11 +66,18 @@ public class PlayerController : MonoBehaviour
 			missile.Hit ();
 			health -= missile.GetDamage ();
 			if (health <= 0) {
-				Destroy (gameObject);
-				AudioSource.PlayClipAtPoint (deathSound, transform.position);
+				Death ();
 			}
 			//			Debug.Log ("Hit by missile");
 		}
+	}
+
+	void Death ()
+	{
+		Destroy (gameObject);
+		AudioSource.PlayClipAtPoint (deathSound, transform.position);
+		LevelManager lvlman = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
+		lvlman.LoadLevel ("Win Screen");
 	}
 }
 

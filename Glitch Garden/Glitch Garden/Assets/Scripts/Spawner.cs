@@ -23,6 +23,22 @@ public class Spawner : MonoBehaviour
 
 	bool isTimeToSpawn (GameObject attackerGameObject)
 	{
-		return true;
+		Attacker attacker = attackerGameObject.GetComponent<Attacker> ();
+
+		float meanSpawnDelay = attacker.seenEverySeconds;
+		float spawnPerSeconds = 1 / meanSpawnDelay;
+
+		if (Time.deltaTime > meanSpawnDelay) {
+			Debug.LogWarning ("Spawn rate capped by frame rate");
+		} 
+
+		float threshold = spawnPerSeconds * Time.deltaTime / 5;
+
+		if (Random.value < threshold) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }

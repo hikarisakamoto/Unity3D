@@ -3,10 +3,17 @@ using System.Collections;
 
 public class Defender : MonoBehaviour
 {
-//	Only used as tag for now!
-// 
-//	void OnTriggerEnter2D ()
-//	{
-//		Debug.Log (name + " trigger enter");
-//	}
+	public int starCost = 100;
+
+	private StarDisplay starDisplay;
+
+	void Start ()
+	{
+		starDisplay = GameObject.FindObjectOfType<StarDisplay> ();
+	}
+
+	public void AddStars (int amount)
+	{
+		starDisplay.AddStars (amount);
+	}
 }

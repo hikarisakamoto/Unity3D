@@ -6,10 +6,12 @@ public class DefenderSpawner : MonoBehaviour
 	public Camera myCamera;
 
 	private GameObject defenderParent;
+	private StarDisplay starDisplay;
 
 	void Start ()
 	{
 		defenderParent = GameObject.Find ("Defenders");
+		starDisplay = GameObject.FindObjectOfType<StarDisplay> ();
 
 		if (!defenderParent) {
 			defenderParent = new GameObject ("Defenders");
@@ -18,18 +20,29 @@ public class DefenderSpawner : MonoBehaviour
 
 	void OnMouseDown ()
 	{
-//		Debug.Log ("Mouse position: " + Input.mousePosition);
-//		Debug.Log ("World unities: " + CalculateWorldPointofMouseClick ());
-//		Debug.Log ("Snap to Grid: " + SnapToGrid (CalculateWorldPointofMouseClick ()));
+		int defenderCost = Button.selectedDefender.GetComponent<Defender> ().starCost;
 
-//		Long form... 
-//		Vector2 rawPos = CalculateWorldPointofMouseClick ();
-//		Vector2 roundedPos = SnapToGrid (rawPos);
-//		GameObject defender = Button.selectedDefender;
-//		Quaternion zeroRot = Quaternion.identity;
-//		GameObject newDef =	Instantiate (defender, roundedPos, zeroRot) as GameObject;
+		if (starDisplay.UseStars (defenderCost) == StarDisplay.Status.SUCCES) {
+			SpawnDefender ();
+		} else {
+			Debug.Log ("Insufficent stars to spawn...");
+		}
+	}
 
-//		Short form made by me
+	void SpawnDefender ()
+	{
+		//		Debug.Log ("Mouse position: " + Input.mousePosition);
+		//		Debug.Log ("World unities: " + CalculateWorldPointofMouseClick ());
+		//		Debug.Log ("Snap to Grid: " + SnapToGrid (CalculateWorldPointofMouseClick ()));
+		
+		//		Long form... 
+		//		Vector2 rawPos = CalculateWorldPointofMouseClick ();
+		//		Vector2 roundedPos = SnapToGrid (rawPos);
+		//		GameObject defender = Button.selectedDefender;
+		//		Quaternion zeroRot = Quaternion.identity;
+		//		GameObject newDef =	Instantiate (defender, roundedPos, zeroRot) as GameObject;
+		
+		//		Short form made by me
 		GameObject newDef = Instantiate (Button.selectedDefender, SnapToGrid (CalculateWorldPointofMouseClick ()), Quaternion.identity) as GameObject;
 		newDef.transform.parent = defenderParent.transform;
 	}

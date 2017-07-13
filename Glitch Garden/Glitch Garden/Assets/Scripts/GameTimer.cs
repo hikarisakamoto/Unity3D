@@ -34,11 +34,27 @@ public class GameTimer : MonoBehaviour
 	{
 		slider.value = Time.timeSinceLevelLoad / levelSeconds;
 		if (Time.timeSinceLevelLoad >= levelSeconds && !isEndOfLevel) {
-//			print ("Level over.");
-			audioSource.Play ();
-			winLabel.SetActive (true);
-			Invoke ("LoadNextLevel", audioSource.clip.length);
-			isEndOfLevel = true;
+			HandleWinCondition ();
+		}
+	}
+
+	void HandleWinCondition ()
+	{
+		//			print ("Level over.");
+		DestroyAllTaggedObjects ();
+		audioSource.Play ();
+		winLabel.SetActive (true);
+		Invoke ("LoadNextLevel", audioSource.clip.length);
+		isEndOfLevel = true;
+	}
+
+	// Destroys all objects with destroyOnWin tag
+	void DestroyAllTaggedObjects ()
+	{
+		GameObject[] taggedObjectsArray = GameObject.FindGameObjectsWithTag ("destroyOnWin");
+
+		foreach (GameObject taggedObject in taggedObjectsArray) {
+			Destroy (taggedObject);
 		}
 	}
 

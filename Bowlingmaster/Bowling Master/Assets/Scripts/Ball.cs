@@ -10,6 +10,7 @@ public class Ball
     private AudioSource audioSource;
     private Rigidbody rigidBody;
 
+
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -20,11 +21,19 @@ public class Ball
         //  Launch(launchVelocity);
     }
 
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(transform.position);
+    }
+
     public void Launch(Vector3 velocity)
     {
         rigidBody.velocity = velocity;
         rigidBody.useGravity = true;
         audioSource.Play();
+
     }
 
 }

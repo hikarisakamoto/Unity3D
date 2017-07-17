@@ -1,20 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour
+    {
 
     public GameObject player;
 
     private Vector3 offset;
 
-    private void Start()
-    {
+    void Start()
+        {
         offset = transform.position - player.transform.position;
-    }
+        }
 
-    private void LateUpdate() //LateUpdate runs after all itens have been processed by update
-    {
+    void LateUpdate()
+        {
         transform.position = player.transform.position + offset;
+        }
     }
-}

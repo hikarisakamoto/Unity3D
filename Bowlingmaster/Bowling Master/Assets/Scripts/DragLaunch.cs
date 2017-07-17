@@ -8,6 +8,7 @@ public class DragLaunch : MonoBehaviour
     private Ball ball;
     private Vector3 inputPosition;
     private float dragTime;
+    private bool ballWaiting = true;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class DragLaunch : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetMouseButtonDown(1))
         {
             DragStart();
@@ -24,7 +26,20 @@ public class DragLaunch : MonoBehaviour
                 DragEnd();
             }
         }
+
     }
+
+    public void MoveSideways(float movementAmount)
+    {
+        if (ballWaiting)
+        {
+            Vector3 currentPosition = new Vector3(Mathf.Clamp(ball.transform.position.x, -39, 39), ball.transform.position.y, ball.transform.position.z);
+
+            ball.transform.position = currentPosition + (new Vector3(movementAmount, 0, 0));
+        }
+    }
+
+
 
     public void DragStart()
     {
@@ -35,12 +50,16 @@ public class DragLaunch : MonoBehaviour
 
     public void DragEnd()
     {
-        // Launch the ball
-        inputPosition = Input.mousePosition - inputPosition;
-        dragTime = Time.time - dragTime;
+        if (ballWaiting)
+        {
+            // Launch the ball
+            inputPosition = Input.mousePosition - inputPosition;
+            dragTime = Time.time - dragTime;
 
-        Vector3 velocity = new Vector3(inputPosition.x, 0f, (inputPosition.y / dragTime));
+            Vector3 velocity = new Vector3(0f, 0f, (inputPosition.y / dragTime));
 
-        ball.Launch(velocity);
+            ball.Launch(velocity);
+            ballWaiting = false;
+        }
     }
 }

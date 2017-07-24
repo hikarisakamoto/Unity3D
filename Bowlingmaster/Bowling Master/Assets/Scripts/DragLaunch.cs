@@ -56,7 +56,7 @@ public class DragLaunch : MonoBehaviour
             inputPosition = Input.mousePosition - inputPosition;
             dragTime = Time.time - dragTime;
 
-            Vector3 velocity = new Vector3(0f, 0f, (inputPosition.y / dragTime));
+            Vector3 velocity = new Vector3(inputPosition.x, 0f, (inputPosition.y / dragTime));
 
             ball.Launch(velocity);
             ballWaiting = false;

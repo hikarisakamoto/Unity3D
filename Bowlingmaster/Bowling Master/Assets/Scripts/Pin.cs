@@ -5,10 +5,20 @@ using UnityEngine;
 public class Pin : MonoBehaviour
 {
     public float standingThreshold = 3f;
+    public float distanceToRaise = 40f;
+
+    //private float distanceToLower;
+    private Rigidbody rigidBody;
 
     void Awake()
     {
         this.GetComponent<Rigidbody>().solverVelocityIterations = 23;
+    }
+
+    private void Start()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+        //distanceToLower = distanceToLower - 1f;
     }
 
     private void Update()
@@ -32,4 +42,26 @@ public class Pin : MonoBehaviour
             return false;
         }
     }
+
+    public void RaiseIfStanding()
+    {
+        // Raise standing pins only by distanceToRaise
+        //Debug.Log("Raising Pin");
+
+        if (IsStanding())
+        {
+            rigidBody.useGravity = false;
+            transform.Translate(new Vector3(0, distanceToRaise, 0), Space.World);
+        }
+    }
+
+    public void Lower()
+    {
+        //Debug.Log("Lowering Pin");
+        //rigidBody.useGravity = true;
+        transform.Translate(new Vector3(0, -distanceToRaise, 0), Space.World);
+        rigidBody.useGravity = true;
+
+    }
+
 }

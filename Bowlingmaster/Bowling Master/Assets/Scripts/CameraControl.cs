@@ -16,7 +16,7 @@ public class CameraControl : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.z <= 1820f) //In Front of head pin 
+        if (ball.transform.position.z <= 1820f) //In Front of head pin 
         {
             transform.position = ball.transform.position + offset;
         }
